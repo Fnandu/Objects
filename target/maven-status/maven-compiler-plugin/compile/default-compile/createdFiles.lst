@@ -1,0 +1,11 @@
+Objects\controller\RegisterController.class
+Objects\daos\UserDAO.class
+Objects\config\AppConfig.class
+Objects\daos\UserDAOImpl.class
+Objects\config\AppInicialitzer.class
+Objects\services\UserService.class
+Objects\controller\MainController.class
+Objects\model\User.class
+Objects\controller\LoginController.class
+Objects\services\UserServiceImpl.class
+Objects\utils\Utils.class
