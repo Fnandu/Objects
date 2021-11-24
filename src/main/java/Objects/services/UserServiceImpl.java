@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService{
         if (u == null) return false;
         return password.equals(u.getPassword());
     }
+
+    @Override
+    public void register(User user) {
+        userDAO.newUser(user);
+    }
 }

@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 public class AppConfig {
 
     @Bean
-    public UrlBasedViewResolver viewResolver(){
+    public UrlBasedViewResolver viewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setPrefix("/WEB-INF/jsp/");
         resolver.setSuffix(".jsp");
@@ -42,7 +42,7 @@ public class AppConfig {
     }
 
     @Bean
-    public JdbcTemplate getJdbcTemplate(DataSource dataSource){
+    public JdbcTemplate getJdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 }

@@ -26,17 +26,23 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public RedirectView login(Model m, @RequestParam String username, @RequestParam String password){
-        if(userService.checkLogin(username,password)){
+    public RedirectView login(Model m, @RequestParam String username, @RequestParam String password) {
+        System.out.println(username + " " + password);
+        if (userService.checkLogin(username, password)) {
             session.removeAttribute("message");
-            session.setAttribute("username",username);
+            session.setAttribute("username", username);
             return new RedirectView("/private/objects");
-        }else {
-            session.setAttribute("message","Usuari o password incorrectes");
+        } else {
+            session.setAttribute("message", "Usuari o password incorrectes");
         }
         return new RedirectView("/login");
 
     }
 
-
+    @GetMapping("/logout")
+    public RedirectView logout() {
+        session.removeAttribute("username");
+        session.removeAttribute("auth");
+        return new RedirectView("/login");
+    }
 }

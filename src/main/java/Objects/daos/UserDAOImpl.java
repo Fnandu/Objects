@@ -11,7 +11,6 @@ import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO{
-
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -23,5 +22,10 @@ public class UserDAOImpl implements UserDAO{
         if (users.get(0) == null) return null;
 
         return users.get(0);
+    }
+
+    @Override
+    public void newUser(User user) {
+        jdbcTemplate.update("insert into users values(?,?)", user.getUsername(), user.getPassword());
     }
 }
