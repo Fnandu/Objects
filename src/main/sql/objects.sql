@@ -4,7 +4,7 @@ USE objects;
 
 CREATE TABLE users(
                       username varchar(30) not null,
-                      passwd varchar(30),
+                      password varchar(60),
                       primary key (username)
 );
 

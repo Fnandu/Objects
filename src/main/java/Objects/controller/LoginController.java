@@ -27,7 +27,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public RedirectView login(Model m, @RequestParam String username, @RequestParam String password) {
-        System.out.println(username + " " + password);
         if (userService.checkLogin(username, password)) {
             session.removeAttribute("message");
             session.setAttribute("username", username);
