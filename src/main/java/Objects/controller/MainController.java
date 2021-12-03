@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -31,7 +32,7 @@ public class MainController {
     }
 
     @PostMapping("/private/objects")
-    public String mainObjects(@RequestParam String bucket_name){
+    public RedirectView mainObjects(@RequestParam String bucket_name){
         String user = (String) session.getAttribute("username");
         LocalDate localDate = LocalDate.now();
 
@@ -42,6 +43,6 @@ public class MainController {
         System.out.println(bucket.getUri() + " " + bucket.getUser()+ " " + bucket.getDate());
         objectsService.CreateBucket(bucket);
 
-        return "objects";
+        return new RedirectView("/private/objects");
     }
 }

@@ -24,7 +24,6 @@ public class ObjectDAOImpl implements ObjectDAO {
         List<Bucket> buckets = jdbcTemplate.query("SELECT * FROM buckets WHERE username=?",
                 new BeanPropertyRowMapper<Bucket>(Bucket.class),
                 username);
-        if (buckets.get(0) == null) return null;
 
         return buckets;
     }
