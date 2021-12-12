@@ -1,7 +1,7 @@
 package Objects.controller;
 
 import Objects.model.Bucket;
-import Objects.model.Objects;
+import Objects.model.Objects_Versions;
 import Objects.services.ObjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,18 +63,18 @@ public class MainController {
         String user = (String) session.getAttribute("username");
         LocalDate localDate = LocalDate.now();
 
-        Objects objects = new Objects();
+        Objects_Versions objectsVersions = new Objects_Versions();
         try {
-            objects.setFileId(0);
-            objects.setFileName(fileName);
-            objects.setFileType(file.getContentType());
-            objects.setFileData(file.getBytes());
-            objects.setFileSize(file.getSize());
-            objects.setFileDate(String.valueOf(localDate));
-            objects.setFileUri(actual_path);
-            objects.setFileUsername(user);
+            objectsVersions.setFileId(0);
+            objectsVersions.setFileName(fileName);
+            objectsVersions.setFileType(file.getContentType());
+            objectsVersions.setFileData(file.getBytes());
+            objectsVersions.setFileSize(file.getSize());
+            objectsVersions.setFileDate(String.valueOf(localDate));
+            objectsVersions.setFileUri(actual_path);
+            objectsVersions.setFileUsername(user);
 
-            objectsService.CreateObject(objects);
+            objectsService.CreateObject(objectsVersions);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,7 +85,9 @@ public class MainController {
 
     @GetMapping("/private/objects/{bucket}/{object}")
     public String object(Model m, @PathVariable String bucket, @PathVariable String object){
+        m.addAttribute("bucket", bucket);
+        m.addAttribute("object", object);
 
-        return "objectVersion";
+        return "viewObjectVersion";
     }
 }

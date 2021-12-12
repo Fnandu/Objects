@@ -1,7 +1,7 @@
 package Objects.daos;
 
 import Objects.model.Bucket;
-import Objects.model.Objects;
+import Objects.model.Objects_Versions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,17 +29,17 @@ public class ObjectDAOImpl implements ObjectDAO {
     }
 
     @Override
-    public void NewObject(Objects objects) {
-        jdbcTemplate.update("insert into object values(?,?,?,?,?,?,?,?)", objects.getFileId(),
-                objects.getFileName(),objects.getFileType(), objects.getFileData(),
-                objects.getFileSize(), objects.getFileDate(), objects.getFileUri(),
-                objects.getFileUsername());
+    public void NewObject(Objects_Versions objectsVersions) {
+        jdbcTemplate.update("insert into object values(?,?,?,?,?,?,?,?)", objectsVersions.getFileId(),
+                objectsVersions.getFileName(), objectsVersions.getFileType(), objectsVersions.getFileData(),
+                objectsVersions.getFileSize(), objectsVersions.getFileDate(), objectsVersions.getFileUri(),
+                objectsVersions.getFileUsername());
     }
 
     @Override
-    public List<Objects> ListOfObjects(String bucket, String username) {
-        List<Objects> objects = jdbcTemplate.query("SELECT * FROM object WHERE fileuri=? and fileusername=?",
-                new BeanPropertyRowMapper<Objects>(Objects.class),
+    public List<Objects_Versions> ListOfObjects(String bucket, String username) {
+        List<Objects_Versions> objects = jdbcTemplate.query("SELECT * FROM object WHERE fileuri=? and fileusername=?",
+                new BeanPropertyRowMapper<Objects_Versions>(Objects_Versions.class),
                 bucket,username);
 
         return objects;

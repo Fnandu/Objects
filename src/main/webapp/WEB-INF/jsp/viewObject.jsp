@@ -17,7 +17,7 @@
 </head>
 <body>
 <body>
-  <h1>/${bucket}</h1>
+
   <div id="Logout">
     <a href="/logout">
 
@@ -32,8 +32,15 @@
       </button>
     </a>
   </div>
+
+  <a href="/private/objects">
+    <button>
+        back
+    </button>
+  </a>
   <div>
-    <h1>Buckets</h1>
+    <h1>Objects</h1>
+    <h2>/${bucket}</h2>
   </div>
 
   <table class="table">
@@ -52,7 +59,7 @@
          <c:forEach var="n" items="${object_list}">
       <tr>
         <th scope="row">${count}</th>
-        <td>${n.fileName}</td>
+        <td ><a href="/private/objects/${n.fileUri}/${n.fileName}">${n.fileName}</a></td>
         <td>${n.fileType}</td>
         <td>${n.fileSize} bytes</td>
         <td>${n.fileDate}</td>
