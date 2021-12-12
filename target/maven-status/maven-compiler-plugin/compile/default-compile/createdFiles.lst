@@ -11,6 +11,7 @@ Objects\controller\MainController.class
 Objects\model\User.class
 Objects\services\ObjectsServiceImpl.class
 Objects\daos\ObjectDAOImpl.class
+Objects\model\Objects.class
 Objects\model\Bucket.class
 Objects\services\UserServiceImpl.class
 Objects\utils\Utils.class

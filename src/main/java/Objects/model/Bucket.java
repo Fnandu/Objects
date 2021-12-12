@@ -2,7 +2,7 @@ package Objects.model;
 
 public class Bucket {
     String uri;
-    String username;
+    String user;
     String date;
 
     public String getUri() {
@@ -14,11 +14,11 @@ public class Bucket {
     }
 
     public String getUser() {
-        return username;
+        return user;
     }
 
     public void setUser(String user) {
-        this.username = user;
+        this.user = user;
     }
 
     public String getDate() {

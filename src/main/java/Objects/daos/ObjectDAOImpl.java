@@ -1,7 +1,7 @@
 package Objects.daos;
 
 import Objects.model.Bucket;
-import Objects.model.User;
+import Objects.model.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,5 +26,13 @@ public class ObjectDAOImpl implements ObjectDAO {
                 username);
 
         return buckets;
+    }
+
+    @Override
+    public void NewObject(Objects objects) {
+        jdbcTemplate.update("insert into object values(?,?,?,?,?,?,?,?)", objects.getFileId(),
+                objects.getFileName(),objects.getFileType(), objects.getFileData(),
+                objects.getFileSize(), objects.getFileDate(), objects.getFileUri(),
+                objects.getFileUsername());
     }
 }
