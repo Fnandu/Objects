@@ -51,7 +51,9 @@ public class MainController {
 
     @GetMapping("/private/objects/{bucket}")
     public String uri(Model m, @PathVariable String bucket){
+        String user = (String) session.getAttribute("username");
         m.addAttribute("bucket", bucket);
+        m.addAttribute("object_list",objectsService.ObjectList(bucket,user));
         return "viewObject";
     }
 

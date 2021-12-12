@@ -40,23 +40,28 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Uri</th>
-        <th scope="col">User</th>
-        <!--<th scope="col">Metadates</th>-->
-        <th scope="col">Date</th>
+        <th scope="col">FileName</th>
+        <th scope="col">FileType</th>
+        <th scope="col">FileSize</th>
+        <th scope="col">FileDate</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
+        <c:set var="count" value="1"/>
+         <c:forEach var="n" items="${object_list}">
       <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
+        <th scope="row">${count}</th>
+        <td>${n.fileName}</td>
+        <td>${n.fileType}</td>
+        <td>${n.fileSize} bytes</td>
+        <td>${n.fileDate}</td>
         <td>
           <form><input type="submit" class="btn btn-danger" value="delete"></form>
         </td>
       </tr>
+                 <c:set var="count" value="${count + 1}"/>
+                </c:forEach>
     </tbody>
   </table>
 

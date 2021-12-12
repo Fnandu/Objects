@@ -35,4 +35,15 @@ public class ObjectDAOImpl implements ObjectDAO {
                 objects.getFileSize(), objects.getFileDate(), objects.getFileUri(),
                 objects.getFileUsername());
     }
+
+    @Override
+    public List<Objects> ListOfObjects(String bucket, String username) {
+        List<Objects> objects = jdbcTemplate.query("SELECT * FROM object WHERE fileuri=? and fileusername=?",
+                new BeanPropertyRowMapper<Objects>(Objects.class),
+                bucket,username);
+
+        return objects;
+    }
+
+
 }

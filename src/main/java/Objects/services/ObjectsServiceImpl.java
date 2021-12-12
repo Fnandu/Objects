@@ -28,5 +28,10 @@ public class ObjectsServiceImpl implements ObjectsService{
         objectDAO.NewObject(objects);
     }
 
+    @Override
+    public List<Objects> ObjectList(String bucket, String username) {
+        return objectDAO.ListOfObjects(bucket,username);
+    }
+
 
 }
