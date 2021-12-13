@@ -5,6 +5,7 @@ Objects\config\AppInicialitzer.class
 Objects\daos\ObjectDAO.class
 Objects\services\ObjectsService.class
 Objects\controller\LoginController.class
+Objects\model\Version.class
 Objects\daos\UserDAOImpl.class
 Objects\services\UserService.class
 Objects\controller\MainController.class

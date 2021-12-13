@@ -2,7 +2,8 @@ package Objects.services;
 
 import Objects.daos.ObjectDAO;
 import Objects.model.Bucket;
-import Objects.model.Objects_Versions;
+import Objects.model.Objects;
+import Objects.model.Version;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,28 @@ public class ObjectsServiceImpl implements ObjectsService{
     }
 
     @Override
-    public void CreateObject(Objects_Versions objectsVersions) {
-        objectDAO.NewObject(objectsVersions);
+    public void CreateObject(Objects objects) {
+        objectDAO.NewObject(objects);
     }
 
     @Override
-    public List<Objects_Versions> ObjectList(String bucket, String username) {
+    public List<Objects> ObjectList(String bucket, String username) {
         return objectDAO.ListOfObjects(bucket,username);
+    }
+
+    @Override
+    public Objects GetId(String bucket, String username, String filename) {
+        return objectDAO.GetIdFromObject(bucket,username,filename);
+    }
+
+    @Override
+    public void CreateVersion(Version version) {
+        objectDAO.NewVersion(version);
+    }
+
+    @Override
+    public List<Version> VersionList(int fileid) {
+        return objectDAO.ListOfVersions(fileid);
     }
 
 

@@ -1,8 +1,10 @@
 package Objects.controller;
 
 import Objects.model.Bucket;
-import Objects.model.Objects_Versions;
+import Objects.model.Objects;
+import Objects.model.Version;
 import Objects.services.ObjectsService;
+import Objects.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 
 @Controller
@@ -24,6 +29,9 @@ public class MainController {
 
     @Autowired
     ObjectsService objectsService;
+
+    @Autowired
+    Utils utils;
 
     @GetMapping("/private/objects")
     public String mainObjects(Model m){
@@ -63,18 +71,38 @@ public class MainController {
         String user = (String) session.getAttribute("username");
         LocalDate localDate = LocalDate.now();
 
-        Objects_Versions objectsVersions = new Objects_Versions();
+        Objects objects = new Objects();
+        Version version = new Version();
         try {
-            objectsVersions.setFileId(0);
-            objectsVersions.setFileName(fileName);
-            objectsVersions.setFileType(file.getContentType());
-            objectsVersions.setFileData(file.getBytes());
-            objectsVersions.setFileSize(file.getSize());
-            objectsVersions.setFileDate(String.valueOf(localDate));
-            objectsVersions.setFileUri(actual_path);
-            objectsVersions.setFileUsername(user);
+            //Comprobamos si no existe antes
+            if(objectsService.GetId(actual_path,user,fileName) == null) {
+                //Creacion del objeto
+                objects.setFileId(0);
+                objects.setFileName(fileName);
+                objects.setFileType(file.getContentType());
+                objects.setFileData(file.getBytes());
+                objects.setFileSize(file.getSize());
+                objects.setFileDate(String.valueOf(localDate));
+                objects.setFileUri(actual_path);
+                objects.setFileUsername(user);
 
-            objectsService.CreateObject(objectsVersions);
+                objectsService.CreateObject(objects);
+            }
+
+            //Obtener el valor de id de dicha version
+            objects = objectsService.GetId(actual_path,user,fileName);
+
+            //Creacion de su primera version
+            version.setVersionId(0);
+            version.setVersionName(fileName);
+            version.setFileData(file.getBytes());
+            version.setVersionSize(file.getSize());
+            version.setVersionDate(String.valueOf(localDate));
+            version.setFileid(objects.getFileId());
+            objectsService.CreateVersion(version);
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,7 +115,41 @@ public class MainController {
     public String object(Model m, @PathVariable String bucket, @PathVariable String object){
         m.addAttribute("bucket", bucket);
         m.addAttribute("object", object);
+        String user = (String) session.getAttribute("username");
+        Objects objects = objectsService.GetId(bucket,user,object);
+        m.addAttribute("version_list", objectsService.VersionList(objects.getFileId()));
+
+
 
         return "viewObjectVersion";
+    }
+
+    @PostMapping("/private/objects/{bucket}/{object}")
+    public RedirectView object(@RequestParam MultipartFile file, @RequestParam String actual_path){
+        String fileName = file.getOriginalFilename();
+        LocalDate localDate = LocalDate.now();
+        String user = (String) session.getAttribute("username");
+
+        try {
+            Objects objects = objectsService.GetId(actual_path,user,fileName);
+            if(objectsService.GetId(actual_path,user,fileName) != null) {
+                Version version = new Version();
+                version.setVersionId(0);
+                version.setVersionName(fileName);
+                version.setVersionDate(String.valueOf(localDate));
+                version.setVersionSize(file.getSize());
+                version.setFileid(objects.getFileId());
+                version.setFileData(file.getBytes());
+                objectsService.CreateVersion(version);
+            } else {
+                session.setAttribute("message", "No es el mismo archivo");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return new RedirectView("/private/objects/" + actual_path + "/" + fileName);
     }
 }

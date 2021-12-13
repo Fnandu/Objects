@@ -16,16 +16,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean checkLogin(String username, String password) {
-        System.out.println(utils.ConvertToMd5(password));
-        System.out.println("**********************************");
         User u = userDAO.getUser(username);
         if (u == null) return false;
-        return utils.ConvertToMd5(password).equals(u.getPassword());
+        return utils.ConvertToSHA256(password).equals(u.getPassword());
     }
 
     @Override
     public void register(User user) {
-        String password = utils.ConvertToMd5(user.getPassword());
+        String password = utils.ConvertToSHA256(user.getPassword());
         user.setPassword(password);
         userDAO.newUser(user);
     }

@@ -53,18 +53,18 @@
     </thead>
     <tbody>
         <c:set var="count" value="1"/>
-         <c:forEach var="n" items="${object_list}">
+         <c:forEach var="n" items="${version_list}">
       <tr>
         <th scope="row">${count}</th>
         <c:choose>
             <c:when test="${count=='1'}">
-                <td>${n.fileName}<span class="badge badge-secondary">New!</span></td>
+                <td>${n.versionName}<span class="badge badge-secondary">New!</span></td>
             </c:when>
             <c:otherwise>
                 <td>${n.fileName}<span class="badge badge-secondary">Old</span></td>
             </c:otherwise>
         </c:choose>
-        <td>${n.fileDate}</td>
+        <td>${n.versionDate}</td>
         <td>
         <form><input type="submit" class="btn btn-success" value="download"></form>
           <form><input type="submit" class="btn btn-danger" value="delete"></form>
@@ -74,7 +74,9 @@
        </c:forEach>
     </tbody>
   </table>
-
+  <c:if test="${not empty message}">
+                        <div style="color:red">${message}</div>
+  </c:if>
   <button class="openButton" onclick="openForm()"><strong>Upload new version</strong></button>
   <div id="popupForm">
     <form action="/private/objects/{bucket}/{object}" method="post" enctype="multipart/form-data">

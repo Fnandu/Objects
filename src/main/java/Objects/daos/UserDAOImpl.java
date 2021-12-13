@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO{
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE username=?",
                 new BeanPropertyRowMapper<User>(User.class),
                 username);
-        if (users.get(0) == null) return null;
+        if (users.size() == 0) return null;
 
         return users.get(0);
     }
