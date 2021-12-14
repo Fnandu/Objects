@@ -49,5 +49,19 @@ public class ObjectsServiceImpl implements ObjectsService{
         return objectDAO.ListOfVersions(fileid);
     }
 
+    @Override
+    public Version downloadFile(int versionId) {
+        List<Version> downloadVersion = objectDAO.ListOfVersions(versionId);
+        return downloadVersion.get(0);
+    }
 
+    @Override
+    public void DeleteBucket(String uri, String username) {
+        objectDAO.DeleteBucket(uri,username);
+    }
+
+    @Override
+    public void DeleteObject(int fileid) {
+        objectDAO.DeleteObject(fileid);
+    }
 }

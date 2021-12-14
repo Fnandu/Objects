@@ -4,8 +4,10 @@ public class Version {
     int versionId;
     String versionName;
     byte[] fileData;
-    long versionSize;
+    String versionSize;
     String versionDate;
+    String versionType;
+    String versionHash;
     int fileid;
 
     public int getVersionId() {
@@ -32,11 +34,11 @@ public class Version {
         this.fileData = fileData;
     }
 
-    public long getVersionSize() {
+    public String getVersionSize() {
         return versionSize;
     }
 
-    public void setVersionSize(long versionSize) {
+    public void setVersionSize(String versionSize) {
         this.versionSize = versionSize;
     }
 
@@ -46,6 +48,22 @@ public class Version {
 
     public void setVersionDate(String versionDate) {
         this.versionDate = versionDate;
+    }
+
+    public String getVersionType() {
+        return versionType;
+    }
+
+    public void setVersionType(String versionType) {
+        this.versionType = versionType;
+    }
+
+    public String getVersionHash() {
+        return versionHash;
+    }
+
+    public void setVersionHash(String versionHash) {
+        this.versionHash = versionHash;
     }
 
     public int getFileid() {

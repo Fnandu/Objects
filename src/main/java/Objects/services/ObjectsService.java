@@ -14,4 +14,7 @@ public interface ObjectsService {
     public Objects GetId(String bucket, String username, String filename);
     public void CreateVersion(Version version);
     public List<Version> VersionList(int fileid);
+    public Version downloadFile(int versionId);
+    public void DeleteBucket(String uri,String username);
+    public void DeleteObject(int fileid);
 }

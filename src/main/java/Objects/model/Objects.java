@@ -5,7 +5,7 @@ public class Objects {
     String fileName;
     String fileType;
     byte[] fileData;
-    long fileSize;
+    String fileSize;
     String fileDate;
     String fileUri;
     String fileUsername;
@@ -42,11 +42,11 @@ public class Objects {
         this.fileData = fileData;
     }
 
-    public long getFileSize() {
+    public String getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(long fileSize) {
+    public void setFileSize(String fileSize) {
         this.fileSize = fileSize;
     }
 

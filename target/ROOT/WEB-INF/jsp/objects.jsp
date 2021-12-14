@@ -57,7 +57,10 @@
         <td>${n.user}</td>
         <td>${n.date}</td>
         <td>
-          <form><input type="submit" class="btn btn-danger" value="delete"></form>
+          <form action="/delete/{bucket}" method="post">
+          <input type="hidden" name="delete_bucket" value=${n.uri}>
+          <input type="submit" class="btn btn-danger" value="delete">
+          </form>
         </td>
       </tr>
            <c:set var="count" value="${count + 1}"/>

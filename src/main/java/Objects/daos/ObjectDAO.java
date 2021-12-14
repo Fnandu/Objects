@@ -14,4 +14,7 @@ public interface ObjectDAO {
     public Objects GetIdFromObject(String bucket, String username, String filename);
     public void NewVersion(Version version);
     public List<Version> ListOfVersions(int fileid);
+    public Version DownloadbyId(int versionId);
+    public void DeleteBucket(String bucket, String username);
+    public void DeleteObject(int fileid);
 }

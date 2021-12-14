@@ -1,14 +1,11 @@
 package Objects.utils;
 
-import com.google.common.hash.Hashing;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -67,5 +64,30 @@ public class Utils {
         System.out.println(sb);
         //return complete hash
         return sb.toString();
+    }
+
+    public String convertToGB(long size) {
+        long kilo = 1024;
+         long mega = kilo * kilo;
+         long giga = mega * kilo;
+         long tera = giga * kilo;
+
+        String s = "";
+        double kb = (double)size / kilo;
+        double mb = kb / kilo;
+        double gb = mb / kilo;
+        double tb = gb / kilo;
+        if(size < kilo) {
+            s = size + " Bytes";
+        } else if(size >= kilo && size < mega) {
+            s =  String.format("%.2f", kb) + " KB";
+        } else if(size >= mega && size < giga) {
+            s = String.format("%.2f", mb) + " MB";
+        } else if(size >= giga && size < tera) {
+            s = String.format("%.2f", gb) + " GB";
+        } else if(size >= tera) {
+            s = String.format("%.2f", tb) + " TB";
+        }
+        return s;
     }
 }

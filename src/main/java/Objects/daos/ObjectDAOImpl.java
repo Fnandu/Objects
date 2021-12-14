@@ -22,7 +22,7 @@ public class ObjectDAOImpl implements ObjectDAO {
 
     @Override
     public List<Bucket> ListOfBuckets(String username) {
-        List<Bucket> buckets = jdbcTemplate.query("SELECT * FROM buckets WHERE username=?",
+        List<Bucket> buckets = jdbcTemplate.query("SELECT * FROM buckets WHERE user=?",
                 new BeanPropertyRowMapper<Bucket>(Bucket.class),
                 username);
 
@@ -30,11 +30,11 @@ public class ObjectDAOImpl implements ObjectDAO {
     }
 
     @Override
-    public void NewObject(Objects objectsVersions) {
-        jdbcTemplate.update("insert into object values(?,?,?,?,?,?,?,?)", objectsVersions.getFileId(),
-                objectsVersions.getFileName(), objectsVersions.getFileType(), objectsVersions.getFileData(),
-                objectsVersions.getFileSize(), objectsVersions.getFileDate(), objectsVersions.getFileUri(),
-                objectsVersions.getFileUsername());
+    public void NewObject(Objects objects) {
+        jdbcTemplate.update("insert into object values(?,?,?,?,?,?,?,?)", objects.getFileId(),
+                objects.getFileName(), objects.getFileType(), objects.getFileData(),
+                objects.getFileSize(), objects.getFileDate(), objects.getFileUri(),
+                objects.getFileUsername());
     }
 
     @Override
@@ -59,13 +59,42 @@ public class ObjectDAOImpl implements ObjectDAO {
 
     @Override
     public void NewVersion(Version version) {
-        jdbcTemplate.update("insert into versions values(?,?,?,?,?,?)", version.getVersionId(),version.getVersionName(), version.getFileData(),
-                version.getVersionSize(), version.getVersionDate(), version.getFileid());
+        jdbcTemplate.update("insert into versions values(?,?,?,?,?,?,?,?)", version.getVersionId(),
+                version.getVersionName(), version.getFileData(), version.getVersionSize(),
+                version.getVersionDate(),version.getVersionType(),version.getVersionHash(),
+                version.getFileid());
     }
 
     @Override
     public List<Version> ListOfVersions(int fileid) {
-        return null;
+        List<Version> versions = jdbcTemplate.query("select * from versions where fileid=? order by versionId desc",
+                new BeanPropertyRowMapper<Version>(Version.class),
+                fileid);
+
+        if(versions.size() == 0) return null;
+
+        return versions;
+    }
+
+    @Override
+    public Version DownloadbyId(int versionId) {
+        List<Version> versions = jdbcTemplate.query("select * from versions where versionId=?",
+                new BeanPropertyRowMapper<Version>(Version.class),
+                versionId);
+
+        if(versions.size() == 0) return null;
+
+        return versions.get(0);
+    }
+
+    @Override
+    public void DeleteBucket(String bucket, String username) {
+        jdbcTemplate.update("delete from buckets where uri=? and user=?", bucket,username);
+    }
+
+    @Override
+    public void DeleteObject(int fileid) {
+        jdbcTemplate.update("delete from object where fileid=?", fileid);
     }
 
 
