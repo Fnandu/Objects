@@ -10,10 +10,10 @@ CREATE TABLE users(
 
 CREATE TABLE buckets(
 		uri varchar(30) not null,
-        username varchar(30) not null,
+        user varchar(30) not null,
         date varchar(30),
-        primary key (uri,username),
-        constraint `users` foreign key (`username`) references `users`(`username`)
+        primary key (uri,user),
+        constraint `users` foreign key (`user`) references `users`(`username`)
 );
 
 CREATE TABLE object(
@@ -21,15 +21,23 @@ CREATE TABLE object(
 	filename varchar(30),
     filetype varchar(30),
     filedata longblob,
-	filesize int,
+	filesize varchar(10),
     filedate varchar(30),
     fileuri varchar(30) not null,
     fileusername varchar(30) not null,
     primary key(fileid),
-	constraint `buckets` foreign key (`fileusername`,`fileuri`) references `buckets`(`username`,`uri`)
+	constraint `buckets` foreign key (`fileusername`,`fileuri`) references `buckets`(`user`,`uri`) ON DELETE CASCADE
 );
 
-
-select * from users;
-select * from buckets;
-select * from object;
+CREATE TABLE versions(
+	versionId int not null auto_increment,
+    versionname varchar(30),
+    versiondata longblob,
+    versionsize varchar(10),
+    versiondate varchar(30),
+    versiontype varchar(30),
+    versionhash varchar(50),
+    fileid int not null,
+    primary key(versionId),
+	constraint `object` foreign key (`fileid`) references `object`(`fileid`) ON DELETE CASCADE
+);

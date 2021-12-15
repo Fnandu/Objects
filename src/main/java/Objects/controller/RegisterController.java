@@ -22,7 +22,8 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String register(@RequestParam String user, @RequestParam String password,
-                           @RequestParam String passwordConfirmation, Model m) {
+                           @RequestParam String passwordConfirmation, @RequestParam String firstname,
+                           @RequestParam String lastname, Model m) {
 
         if (!password.equals(passwordConfirmation)) {
             m.addAttribute("message", "Passwords does not match");
@@ -31,6 +32,8 @@ public class RegisterController {
             User u = new User();
             u.setUsername(user);
             u.setPassword(password);
+            u.setFirstname(firstname);
+            u.setLastname(lastname);
             userService.register(u);
             m.addAttribute("message", "Registration successful, you can login");
             return "login";

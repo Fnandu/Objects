@@ -27,4 +27,9 @@ public class UserServiceImpl implements UserService{
         user.setPassword(password);
         userDAO.newUser(user);
     }
+
+    @Override
+    public User getInfoUser(String user) {
+        return userDAO.getUser(user);
+    }
 }
